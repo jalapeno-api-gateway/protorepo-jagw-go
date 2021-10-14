@@ -1,1 +1,0 @@
-# protorepo-jagw-go
