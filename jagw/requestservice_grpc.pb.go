@@ -22,6 +22,7 @@ type RequestServiceClient interface {
 	GetLsLinks(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsLinkResponse, error)
 	GetLsPrefixes(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsPrefixResponse, error)
 	GetLsSrv6Sids(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsSrv6SidResponse, error)
+	GetLsNodeEdges(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsNodeEdgeResponse, error)
 	GetTelemetryData(ctx context.Context, in *TelemetryRequest, opts ...grpc.CallOption) (*TelemetryResponse, error)
 }
 
@@ -69,6 +70,15 @@ func (c *requestServiceClient) GetLsSrv6Sids(ctx context.Context, in *TopologyRe
 	return out, nil
 }
 
+func (c *requestServiceClient) GetLsNodeEdges(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsNodeEdgeResponse, error) {
+	out := new(LsNodeEdgeResponse)
+	err := c.cc.Invoke(ctx, "/jagw.RequestService/GetLsNodeEdges", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *requestServiceClient) GetTelemetryData(ctx context.Context, in *TelemetryRequest, opts ...grpc.CallOption) (*TelemetryResponse, error) {
 	out := new(TelemetryResponse)
 	err := c.cc.Invoke(ctx, "/jagw.RequestService/GetTelemetryData", in, out, opts...)
@@ -86,6 +96,7 @@ type RequestServiceServer interface {
 	GetLsLinks(context.Context, *TopologyRequest) (*LsLinkResponse, error)
 	GetLsPrefixes(context.Context, *TopologyRequest) (*LsPrefixResponse, error)
 	GetLsSrv6Sids(context.Context, *TopologyRequest) (*LsSrv6SidResponse, error)
+	GetLsNodeEdges(context.Context, *TopologyRequest) (*LsNodeEdgeResponse, error)
 	GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error)
 	mustEmbedUnimplementedRequestServiceServer()
 }
@@ -105,6 +116,9 @@ func (UnimplementedRequestServiceServer) GetLsPrefixes(context.Context, *Topolog
 }
 func (UnimplementedRequestServiceServer) GetLsSrv6Sids(context.Context, *TopologyRequest) (*LsSrv6SidResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLsSrv6Sids not implemented")
+}
+func (UnimplementedRequestServiceServer) GetLsNodeEdges(context.Context, *TopologyRequest) (*LsNodeEdgeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLsNodeEdges not implemented")
 }
 func (UnimplementedRequestServiceServer) GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTelemetryData not implemented")
@@ -194,6 +208,24 @@ func _RequestService_GetLsSrv6Sids_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RequestService_GetLsNodeEdges_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TopologyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RequestServiceServer).GetLsNodeEdges(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jagw.RequestService/GetLsNodeEdges",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RequestServiceServer).GetLsNodeEdges(ctx, req.(*TopologyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RequestService_GetTelemetryData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TelemetryRequest)
 	if err := dec(in); err != nil {
@@ -234,6 +266,10 @@ var RequestService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLsSrv6Sids",
 			Handler:    _RequestService_GetLsSrv6Sids_Handler,
+		},
+		{
+			MethodName: "GetLsNodeEdges",
+			Handler:    _RequestService_GetLsNodeEdges_Handler,
 		},
 		{
 			MethodName: "GetTelemetryData",
