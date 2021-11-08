@@ -24,7 +24,6 @@ type RequestServiceClient interface {
 	GetLsSrv6Sids(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsSrv6SidResponse, error)
 	GetLsNodeEdges(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsNodeEdgeResponse, error)
 	GetTelemetryData(ctx context.Context, in *TelemetryRequest, opts ...grpc.CallOption) (*TelemetryResponse, error)
-	GetTelemetryDataRange(ctx context.Context, in *TelemetryRangeRequest, opts ...grpc.CallOption) (*TelemetryRangeResponse, error)
 }
 
 type requestServiceClient struct {
@@ -89,15 +88,6 @@ func (c *requestServiceClient) GetTelemetryData(ctx context.Context, in *Telemet
 	return out, nil
 }
 
-func (c *requestServiceClient) GetTelemetryDataRange(ctx context.Context, in *TelemetryRangeRequest, opts ...grpc.CallOption) (*TelemetryRangeResponse, error) {
-	out := new(TelemetryRangeResponse)
-	err := c.cc.Invoke(ctx, "/jagw.RequestService/GetTelemetryDataRange", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // RequestServiceServer is the server API for RequestService service.
 // All implementations must embed UnimplementedRequestServiceServer
 // for forward compatibility
@@ -108,7 +98,6 @@ type RequestServiceServer interface {
 	GetLsSrv6Sids(context.Context, *TopologyRequest) (*LsSrv6SidResponse, error)
 	GetLsNodeEdges(context.Context, *TopologyRequest) (*LsNodeEdgeResponse, error)
 	GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error)
-	GetTelemetryDataRange(context.Context, *TelemetryRangeRequest) (*TelemetryRangeResponse, error)
 	mustEmbedUnimplementedRequestServiceServer()
 }
 
@@ -133,9 +122,6 @@ func (UnimplementedRequestServiceServer) GetLsNodeEdges(context.Context, *Topolo
 }
 func (UnimplementedRequestServiceServer) GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTelemetryData not implemented")
-}
-func (UnimplementedRequestServiceServer) GetTelemetryDataRange(context.Context, *TelemetryRangeRequest) (*TelemetryRangeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTelemetryDataRange not implemented")
 }
 func (UnimplementedRequestServiceServer) mustEmbedUnimplementedRequestServiceServer() {}
 
@@ -258,24 +244,6 @@ func _RequestService_GetTelemetryData_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RequestService_GetTelemetryDataRange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TelemetryRangeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RequestServiceServer).GetTelemetryDataRange(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/jagw.RequestService/GetTelemetryDataRange",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RequestServiceServer).GetTelemetryDataRange(ctx, req.(*TelemetryRangeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // RequestService_ServiceDesc is the grpc.ServiceDesc for RequestService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -306,10 +274,6 @@ var RequestService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTelemetryData",
 			Handler:    _RequestService_GetTelemetryData_Handler,
-		},
-		{
-			MethodName: "GetTelemetryDataRange",
-			Handler:    _RequestService_GetTelemetryDataRange_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
