@@ -23,6 +23,7 @@ type RequestServiceClient interface {
 	GetLsPrefixes(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsPrefixResponse, error)
 	GetLsSrv6Sids(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsSrv6SidResponse, error)
 	GetLsNodeEdges(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsNodeEdgeResponse, error)
+	GetLsNodeCoordinates(ctx context.Context, in *LsNodeCoordinatesRequest, opts ...grpc.CallOption) (*LsNodeCoordinatesResponse, error)
 	GetTelemetryData(ctx context.Context, in *TelemetryRequest, opts ...grpc.CallOption) (*TelemetryResponse, error)
 }
 
@@ -79,6 +80,15 @@ func (c *requestServiceClient) GetLsNodeEdges(ctx context.Context, in *TopologyR
 	return out, nil
 }
 
+func (c *requestServiceClient) GetLsNodeCoordinates(ctx context.Context, in *LsNodeCoordinatesRequest, opts ...grpc.CallOption) (*LsNodeCoordinatesResponse, error) {
+	out := new(LsNodeCoordinatesResponse)
+	err := c.cc.Invoke(ctx, "/jagw.RequestService/GetLsNodeCoordinates", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *requestServiceClient) GetTelemetryData(ctx context.Context, in *TelemetryRequest, opts ...grpc.CallOption) (*TelemetryResponse, error) {
 	out := new(TelemetryResponse)
 	err := c.cc.Invoke(ctx, "/jagw.RequestService/GetTelemetryData", in, out, opts...)
@@ -97,6 +107,7 @@ type RequestServiceServer interface {
 	GetLsPrefixes(context.Context, *TopologyRequest) (*LsPrefixResponse, error)
 	GetLsSrv6Sids(context.Context, *TopologyRequest) (*LsSrv6SidResponse, error)
 	GetLsNodeEdges(context.Context, *TopologyRequest) (*LsNodeEdgeResponse, error)
+	GetLsNodeCoordinates(context.Context, *LsNodeCoordinatesRequest) (*LsNodeCoordinatesResponse, error)
 	GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error)
 	mustEmbedUnimplementedRequestServiceServer()
 }
@@ -119,6 +130,9 @@ func (UnimplementedRequestServiceServer) GetLsSrv6Sids(context.Context, *Topolog
 }
 func (UnimplementedRequestServiceServer) GetLsNodeEdges(context.Context, *TopologyRequest) (*LsNodeEdgeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLsNodeEdges not implemented")
+}
+func (UnimplementedRequestServiceServer) GetLsNodeCoordinates(context.Context, *LsNodeCoordinatesRequest) (*LsNodeCoordinatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLsNodeCoordinates not implemented")
 }
 func (UnimplementedRequestServiceServer) GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTelemetryData not implemented")
@@ -226,6 +240,24 @@ func _RequestService_GetLsNodeEdges_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RequestService_GetLsNodeCoordinates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LsNodeCoordinatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RequestServiceServer).GetLsNodeCoordinates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jagw.RequestService/GetLsNodeCoordinates",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RequestServiceServer).GetLsNodeCoordinates(ctx, req.(*LsNodeCoordinatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RequestService_GetTelemetryData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TelemetryRequest)
 	if err := dec(in); err != nil {
@@ -270,6 +302,10 @@ var RequestService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLsNodeEdges",
 			Handler:    _RequestService_GetLsNodeEdges_Handler,
+		},
+		{
+			MethodName: "GetLsNodeCoordinates",
+			Handler:    _RequestService_GetLsNodeCoordinates_Handler,
 		},
 		{
 			MethodName: "GetTelemetryData",
