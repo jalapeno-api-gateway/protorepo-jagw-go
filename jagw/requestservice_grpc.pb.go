@@ -25,6 +25,7 @@ type RequestServiceClient interface {
 	GetLsNodeEdges(ctx context.Context, in *TopologyRequest, opts ...grpc.CallOption) (*LsNodeEdgeResponse, error)
 	GetLsNodeCoordinates(ctx context.Context, in *LsNodeCoordinatesRequest, opts ...grpc.CallOption) (*LsNodeCoordinatesResponse, error)
 	GetTelemetryData(ctx context.Context, in *TelemetryRequest, opts ...grpc.CallOption) (*TelemetryResponse, error)
+	GetMeasurements(ctx context.Context, in *MeasurementsRequest, opts ...grpc.CallOption) (*MeasurementsResponse, error)
 }
 
 type requestServiceClient struct {
@@ -98,6 +99,15 @@ func (c *requestServiceClient) GetTelemetryData(ctx context.Context, in *Telemet
 	return out, nil
 }
 
+func (c *requestServiceClient) GetMeasurements(ctx context.Context, in *MeasurementsRequest, opts ...grpc.CallOption) (*MeasurementsResponse, error) {
+	out := new(MeasurementsResponse)
+	err := c.cc.Invoke(ctx, "/jagw.RequestService/GetMeasurements", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RequestServiceServer is the server API for RequestService service.
 // All implementations must embed UnimplementedRequestServiceServer
 // for forward compatibility
@@ -109,6 +119,7 @@ type RequestServiceServer interface {
 	GetLsNodeEdges(context.Context, *TopologyRequest) (*LsNodeEdgeResponse, error)
 	GetLsNodeCoordinates(context.Context, *LsNodeCoordinatesRequest) (*LsNodeCoordinatesResponse, error)
 	GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error)
+	GetMeasurements(context.Context, *MeasurementsRequest) (*MeasurementsResponse, error)
 	mustEmbedUnimplementedRequestServiceServer()
 }
 
@@ -136,6 +147,9 @@ func (UnimplementedRequestServiceServer) GetLsNodeCoordinates(context.Context, *
 }
 func (UnimplementedRequestServiceServer) GetTelemetryData(context.Context, *TelemetryRequest) (*TelemetryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTelemetryData not implemented")
+}
+func (UnimplementedRequestServiceServer) GetMeasurements(context.Context, *MeasurementsRequest) (*MeasurementsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMeasurements not implemented")
 }
 func (UnimplementedRequestServiceServer) mustEmbedUnimplementedRequestServiceServer() {}
 
@@ -276,6 +290,24 @@ func _RequestService_GetTelemetryData_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RequestService_GetMeasurements_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MeasurementsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RequestServiceServer).GetMeasurements(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jagw.RequestService/GetMeasurements",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RequestServiceServer).GetMeasurements(ctx, req.(*MeasurementsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RequestService_ServiceDesc is the grpc.ServiceDesc for RequestService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -310,6 +342,10 @@ var RequestService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTelemetryData",
 			Handler:    _RequestService_GetTelemetryData_Handler,
+		},
+		{
+			MethodName: "GetMeasurements",
+			Handler:    _RequestService_GetMeasurements_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
