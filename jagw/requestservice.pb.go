@@ -110,9 +110,8 @@ type Measurement struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name                       *string              `protobuf:"bytes,1,req,name=name" json:"name,omitempty"`
-	Columns                    []*MeasurementColumn `protobuf:"bytes,2,rep,name=columns" json:"columns,omitempty"`
-	TimestampLatestMeasurement *int64               `protobuf:"varint,3,req,name=timestamp_latest_measurement,json=timestampLatestMeasurement" json:"timestamp_latest_measurement,omitempty"`
+	Name                       *string `protobuf:"bytes,1,req,name=name" json:"name,omitempty"`
+	TimestampLatestMeasurement *int64  `protobuf:"varint,2,req,name=timestamp_latest_measurement,json=timestampLatestMeasurement" json:"timestamp_latest_measurement,omitempty"`
 }
 
 func (x *Measurement) Reset() {
@@ -154,18 +153,113 @@ func (x *Measurement) GetName() string {
 	return ""
 }
 
-func (x *Measurement) GetColumns() []*MeasurementColumn {
-	if x != nil {
-		return x.Columns
-	}
-	return nil
-}
-
 func (x *Measurement) GetTimestampLatestMeasurement() int64 {
 	if x != nil && x.TimestampLatestMeasurement != nil {
 		return *x.TimestampLatestMeasurement
 	}
 	return 0
+}
+
+type MeasurementDetailsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name *string `protobuf:"bytes,1,req,name=name" json:"name,omitempty"`
+}
+
+func (x *MeasurementDetailsRequest) Reset() {
+	*x = MeasurementDetailsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_requestservice_requestservice_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MeasurementDetailsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MeasurementDetailsRequest) ProtoMessage() {}
+
+func (x *MeasurementDetailsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_requestservice_requestservice_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MeasurementDetailsRequest.ProtoReflect.Descriptor instead.
+func (*MeasurementDetailsRequest) Descriptor() ([]byte, []int) {
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *MeasurementDetailsRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+type MeasurementDetailsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TimestampLatestMeasurement *int64               `protobuf:"varint,1,req,name=timestamp_latest_measurement,json=timestampLatestMeasurement" json:"timestamp_latest_measurement,omitempty"`
+	Columns                    []*MeasurementColumn `protobuf:"bytes,2,rep,name=columns" json:"columns,omitempty"`
+}
+
+func (x *MeasurementDetailsResponse) Reset() {
+	*x = MeasurementDetailsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_requestservice_requestservice_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MeasurementDetailsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MeasurementDetailsResponse) ProtoMessage() {}
+
+func (x *MeasurementDetailsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_requestservice_requestservice_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MeasurementDetailsResponse.ProtoReflect.Descriptor instead.
+func (*MeasurementDetailsResponse) Descriptor() ([]byte, []int) {
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *MeasurementDetailsResponse) GetTimestampLatestMeasurement() int64 {
+	if x != nil && x.TimestampLatestMeasurement != nil {
+		return *x.TimestampLatestMeasurement
+	}
+	return 0
+}
+
+func (x *MeasurementDetailsResponse) GetColumns() []*MeasurementColumn {
+	if x != nil {
+		return x.Columns
+	}
+	return nil
 }
 
 type MeasurementColumn struct {
@@ -176,12 +270,13 @@ type MeasurementColumn struct {
 	Name       *string `protobuf:"bytes,1,req,name=name" json:"name,omitempty"`
 	Type       *string `protobuf:"bytes,2,req,name=type" json:"type,omitempty"`
 	InfluxType *string `protobuf:"bytes,3,req,name=influx_type,json=influxType" json:"influx_type,omitempty"`
+	LastValue  *string `protobuf:"bytes,4,req,name=last_value,json=lastValue" json:"last_value,omitempty"`
 }
 
 func (x *MeasurementColumn) Reset() {
 	*x = MeasurementColumn{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[3]
+		mi := &file_requestservice_requestservice_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -194,7 +289,7 @@ func (x *MeasurementColumn) String() string {
 func (*MeasurementColumn) ProtoMessage() {}
 
 func (x *MeasurementColumn) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[3]
+	mi := &file_requestservice_requestservice_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -207,7 +302,7 @@ func (x *MeasurementColumn) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MeasurementColumn.ProtoReflect.Descriptor instead.
 func (*MeasurementColumn) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{3}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *MeasurementColumn) GetName() string {
@@ -231,6 +326,13 @@ func (x *MeasurementColumn) GetInfluxType() string {
 	return ""
 }
 
+func (x *MeasurementColumn) GetLastValue() string {
+	if x != nil && x.LastValue != nil {
+		return *x.LastValue
+	}
+	return ""
+}
+
 type TopologyRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -243,7 +345,7 @@ type TopologyRequest struct {
 func (x *TopologyRequest) Reset() {
 	*x = TopologyRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[4]
+		mi := &file_requestservice_requestservice_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -256,7 +358,7 @@ func (x *TopologyRequest) String() string {
 func (*TopologyRequest) ProtoMessage() {}
 
 func (x *TopologyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[4]
+	mi := &file_requestservice_requestservice_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -269,7 +371,7 @@ func (x *TopologyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TopologyRequest.ProtoReflect.Descriptor instead.
 func (*TopologyRequest) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{4}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *TopologyRequest) GetKeys() []string {
@@ -297,7 +399,7 @@ type LsNodeCoordinatesRequest struct {
 func (x *LsNodeCoordinatesRequest) Reset() {
 	*x = LsNodeCoordinatesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[5]
+		mi := &file_requestservice_requestservice_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -310,7 +412,7 @@ func (x *LsNodeCoordinatesRequest) String() string {
 func (*LsNodeCoordinatesRequest) ProtoMessage() {}
 
 func (x *LsNodeCoordinatesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[5]
+	mi := &file_requestservice_requestservice_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -323,7 +425,7 @@ func (x *LsNodeCoordinatesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LsNodeCoordinatesRequest.ProtoReflect.Descriptor instead.
 func (*LsNodeCoordinatesRequest) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{5}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *LsNodeCoordinatesRequest) GetLsNodeKeys() []string {
@@ -347,7 +449,7 @@ type TelemetryRequest struct {
 func (x *TelemetryRequest) Reset() {
 	*x = TelemetryRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[6]
+		mi := &file_requestservice_requestservice_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -360,7 +462,7 @@ func (x *TelemetryRequest) String() string {
 func (*TelemetryRequest) ProtoMessage() {}
 
 func (x *TelemetryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[6]
+	mi := &file_requestservice_requestservice_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -373,7 +475,7 @@ func (x *TelemetryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TelemetryRequest.ProtoReflect.Descriptor instead.
 func (*TelemetryRequest) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{6}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *TelemetryRequest) GetSensorPath() string {
@@ -417,7 +519,7 @@ type StringFilter struct {
 func (x *StringFilter) Reset() {
 	*x = StringFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[7]
+		mi := &file_requestservice_requestservice_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -430,7 +532,7 @@ func (x *StringFilter) String() string {
 func (*StringFilter) ProtoMessage() {}
 
 func (x *StringFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[7]
+	mi := &file_requestservice_requestservice_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -443,7 +545,7 @@ func (x *StringFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StringFilter.ProtoReflect.Descriptor instead.
 func (*StringFilter) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{7}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *StringFilter) GetProperty() string {
@@ -479,7 +581,7 @@ type RangeFilter struct {
 func (x *RangeFilter) Reset() {
 	*x = RangeFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[8]
+		mi := &file_requestservice_requestservice_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -492,7 +594,7 @@ func (x *RangeFilter) String() string {
 func (*RangeFilter) ProtoMessage() {}
 
 func (x *RangeFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[8]
+	mi := &file_requestservice_requestservice_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -505,7 +607,7 @@ func (x *RangeFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RangeFilter.ProtoReflect.Descriptor instead.
 func (*RangeFilter) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{8}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *RangeFilter) GetEarliestTimestamp() int64 {
@@ -533,7 +635,7 @@ type LsNodeResponse struct {
 func (x *LsNodeResponse) Reset() {
 	*x = LsNodeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[9]
+		mi := &file_requestservice_requestservice_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -546,7 +648,7 @@ func (x *LsNodeResponse) String() string {
 func (*LsNodeResponse) ProtoMessage() {}
 
 func (x *LsNodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[9]
+	mi := &file_requestservice_requestservice_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -559,7 +661,7 @@ func (x *LsNodeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LsNodeResponse.ProtoReflect.Descriptor instead.
 func (*LsNodeResponse) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{9}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *LsNodeResponse) GetLsNodes() []*LsNode {
@@ -580,7 +682,7 @@ type LsLinkResponse struct {
 func (x *LsLinkResponse) Reset() {
 	*x = LsLinkResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[10]
+		mi := &file_requestservice_requestservice_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -593,7 +695,7 @@ func (x *LsLinkResponse) String() string {
 func (*LsLinkResponse) ProtoMessage() {}
 
 func (x *LsLinkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[10]
+	mi := &file_requestservice_requestservice_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -606,7 +708,7 @@ func (x *LsLinkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LsLinkResponse.ProtoReflect.Descriptor instead.
 func (*LsLinkResponse) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{10}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *LsLinkResponse) GetLsLinks() []*LsLink {
@@ -627,7 +729,7 @@ type LsPrefixResponse struct {
 func (x *LsPrefixResponse) Reset() {
 	*x = LsPrefixResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[11]
+		mi := &file_requestservice_requestservice_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -640,7 +742,7 @@ func (x *LsPrefixResponse) String() string {
 func (*LsPrefixResponse) ProtoMessage() {}
 
 func (x *LsPrefixResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[11]
+	mi := &file_requestservice_requestservice_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -653,7 +755,7 @@ func (x *LsPrefixResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LsPrefixResponse.ProtoReflect.Descriptor instead.
 func (*LsPrefixResponse) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{11}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *LsPrefixResponse) GetLsPrefixes() []*LsPrefix {
@@ -674,7 +776,7 @@ type LsSrv6SidResponse struct {
 func (x *LsSrv6SidResponse) Reset() {
 	*x = LsSrv6SidResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[12]
+		mi := &file_requestservice_requestservice_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -687,7 +789,7 @@ func (x *LsSrv6SidResponse) String() string {
 func (*LsSrv6SidResponse) ProtoMessage() {}
 
 func (x *LsSrv6SidResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[12]
+	mi := &file_requestservice_requestservice_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -700,7 +802,7 @@ func (x *LsSrv6SidResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LsSrv6SidResponse.ProtoReflect.Descriptor instead.
 func (*LsSrv6SidResponse) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{12}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *LsSrv6SidResponse) GetLsSrv6Sids() []*LsSrv6Sid {
@@ -721,7 +823,7 @@ type LsNodeEdgeResponse struct {
 func (x *LsNodeEdgeResponse) Reset() {
 	*x = LsNodeEdgeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[13]
+		mi := &file_requestservice_requestservice_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -734,7 +836,7 @@ func (x *LsNodeEdgeResponse) String() string {
 func (*LsNodeEdgeResponse) ProtoMessage() {}
 
 func (x *LsNodeEdgeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[13]
+	mi := &file_requestservice_requestservice_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -747,7 +849,7 @@ func (x *LsNodeEdgeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LsNodeEdgeResponse.ProtoReflect.Descriptor instead.
 func (*LsNodeEdgeResponse) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{13}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *LsNodeEdgeResponse) GetLsNodeEdges() []*LsNodeEdge {
@@ -768,7 +870,7 @@ type LsNodeCoordinatesResponse struct {
 func (x *LsNodeCoordinatesResponse) Reset() {
 	*x = LsNodeCoordinatesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[14]
+		mi := &file_requestservice_requestservice_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -781,7 +883,7 @@ func (x *LsNodeCoordinatesResponse) String() string {
 func (*LsNodeCoordinatesResponse) ProtoMessage() {}
 
 func (x *LsNodeCoordinatesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[14]
+	mi := &file_requestservice_requestservice_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -794,7 +896,7 @@ func (x *LsNodeCoordinatesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LsNodeCoordinatesResponse.ProtoReflect.Descriptor instead.
 func (*LsNodeCoordinatesResponse) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{14}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *LsNodeCoordinatesResponse) GetCoordinates() []*LsNodeCoordinates {
@@ -815,7 +917,7 @@ type TelemetryResponse struct {
 func (x *TelemetryResponse) Reset() {
 	*x = TelemetryResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_requestservice_requestservice_proto_msgTypes[15]
+		mi := &file_requestservice_requestservice_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -828,7 +930,7 @@ func (x *TelemetryResponse) String() string {
 func (*TelemetryResponse) ProtoMessage() {}
 
 func (x *TelemetryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_requestservice_requestservice_proto_msgTypes[15]
+	mi := &file_requestservice_requestservice_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -841,7 +943,7 @@ func (x *TelemetryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TelemetryResponse.ProtoReflect.Descriptor instead.
 func (*TelemetryResponse) Descriptor() ([]byte, []int) {
-	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{15}
+	return file_requestservice_requestservice_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *TelemetryResponse) GetTelemetryData() []string {
@@ -865,22 +967,33 @@ var file_requestservice_requestservice_proto_rawDesc = []byte{
 	0x65, 0x12, 0x35, 0x0a, 0x0c, 0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74,
 	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x6a, 0x61, 0x67, 0x77, 0x2e, 0x4d,
 	0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x0c, 0x6d, 0x65, 0x61, 0x73,
-	0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x96, 0x01, 0x0a, 0x0b, 0x4d, 0x65, 0x61,
-	0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
-	0x18, 0x01, 0x20, 0x02, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x31, 0x0a, 0x07,
-	0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e,
-	0x6a, 0x61, 0x67, 0x77, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74,
-	0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x52, 0x07, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x73, 0x12,
-	0x40, 0x0a, 0x1c, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x5f, 0x6c, 0x61, 0x74,
-	0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x18,
-	0x03, 0x20, 0x02, 0x28, 0x03, 0x52, 0x1a, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x4c, 0x61, 0x74, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e,
-	0x74, 0x22, 0x5c, 0x0a, 0x11, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74,
-	0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
-	0x20, 0x02, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79,
-	0x70, 0x65, 0x18, 0x02, 0x20, 0x02, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x1f,
-	0x0a, 0x0b, 0x69, 0x6e, 0x66, 0x6c, 0x75, 0x78, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20,
-	0x02, 0x28, 0x09, 0x52, 0x0a, 0x69, 0x6e, 0x66, 0x6c, 0x75, 0x78, 0x54, 0x79, 0x70, 0x65, 0x22,
+	0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x63, 0x0a, 0x0b, 0x4d, 0x65, 0x61, 0x73,
+	0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x02, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x40, 0x0a, 0x1c, 0x74,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x5f, 0x6c, 0x61, 0x74, 0x65, 0x73, 0x74, 0x5f,
+	0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x02, 0x28,
+	0x03, 0x52, 0x1a, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x4c, 0x61, 0x74, 0x65,
+	0x73, 0x74, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x2f, 0x0a,
+	0x19, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x44, 0x65, 0x74, 0x61,
+	0x69, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x02, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x91,
+	0x01, 0x0a, 0x1a, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x44, 0x65,
+	0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x40, 0x0a,
+	0x1c, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x5f, 0x6c, 0x61, 0x74, 0x65, 0x73,
+	0x74, 0x5f, 0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20,
+	0x02, 0x28, 0x03, 0x52, 0x1a, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x4c, 0x61,
+	0x74, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12,
+	0x31, 0x0a, 0x07, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x17, 0x2e, 0x6a, 0x61, 0x67, 0x77, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d,
+	0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x52, 0x07, 0x63, 0x6f, 0x6c, 0x75, 0x6d,
+	0x6e, 0x73, 0x22, 0x7b, 0x0a, 0x11, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e,
+	0x74, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x02, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74,
+	0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x02, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12,
+	0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x66, 0x6c, 0x75, 0x78, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03,
+	0x20, 0x02, 0x28, 0x09, 0x52, 0x0a, 0x69, 0x6e, 0x66, 0x6c, 0x75, 0x78, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x1d, 0x0a, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x04,
+	0x20, 0x02, 0x28, 0x09, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x22,
 	0x4c, 0x0a, 0x0f, 0x54, 0x6f, 0x70, 0x6f, 0x6c, 0x6f, 0x67, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09,
 	0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x12, 0x25, 0x0a, 0x0e, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72,
@@ -946,7 +1059,7 @@ var file_requestservice_requestservice_proto_rawDesc = []byte{
 	0x74, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x74,
 	0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20,
 	0x03, 0x28, 0x09, 0x52, 0x0d, 0x74, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x44, 0x61,
-	0x74, 0x61, 0x32, 0xc2, 0x04, 0x0a, 0x0e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x53, 0x65,
+	0x74, 0x61, 0x32, 0xa0, 0x05, 0x0a, 0x0e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x53, 0x65,
 	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3b, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x4c, 0x73, 0x4e, 0x6f,
 	0x64, 0x65, 0x73, 0x12, 0x15, 0x2e, 0x6a, 0x61, 0x67, 0x77, 0x2e, 0x54, 0x6f, 0x70, 0x6f, 0x6c,
 	0x6f, 0x67, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x6a, 0x61, 0x67,
@@ -982,10 +1095,16 @@ var file_requestservice_requestservice_proto_rawDesc = []byte{
 	0x2e, 0x6a, 0x61, 0x67, 0x77, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e,
 	0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x6a, 0x61, 0x67, 0x77,
 	0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x34, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6a, 0x61, 0x6c, 0x61, 0x70, 0x65, 0x6e, 0x6f, 0x2d, 0x61,
-	0x70, 0x69, 0x2d, 0x67, 0x61, 0x74, 0x65, 0x77, 0x61, 0x79, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x75, 0x66, 0x2f, 0x6a, 0x61, 0x67, 0x77, 0x3b, 0x6a, 0x61, 0x67, 0x77,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5c, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x4d, 0x65,
+	0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
+	0x12, 0x1f, 0x2e, 0x6a, 0x61, 0x67, 0x77, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d,
+	0x65, 0x6e, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x20, 0x2e, 0x6a, 0x61, 0x67, 0x77, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65,
+	0x6d, 0x65, 0x6e, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x34, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x6a, 0x61, 0x6c, 0x61, 0x70, 0x65, 0x6e, 0x6f, 0x2d, 0x61, 0x70, 0x69,
+	0x2d, 0x67, 0x61, 0x74, 0x65, 0x77, 0x61, 0x79, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
+	0x66, 0x2f, 0x6a, 0x61, 0x67, 0x77, 0x3b, 0x6a, 0x61, 0x67, 0x77,
 }
 
 var (
@@ -1000,62 +1119,66 @@ func file_requestservice_requestservice_proto_rawDescGZIP() []byte {
 	return file_requestservice_requestservice_proto_rawDescData
 }
 
-var file_requestservice_requestservice_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_requestservice_requestservice_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_requestservice_requestservice_proto_goTypes = []interface{}{
-	(*MeasurementsRequest)(nil),       // 0: jagw.MeasurementsRequest
-	(*MeasurementsResponse)(nil),      // 1: jagw.MeasurementsResponse
-	(*Measurement)(nil),               // 2: jagw.Measurement
-	(*MeasurementColumn)(nil),         // 3: jagw.MeasurementColumn
-	(*TopologyRequest)(nil),           // 4: jagw.TopologyRequest
-	(*LsNodeCoordinatesRequest)(nil),  // 5: jagw.LsNodeCoordinatesRequest
-	(*TelemetryRequest)(nil),          // 6: jagw.TelemetryRequest
-	(*StringFilter)(nil),              // 7: jagw.StringFilter
-	(*RangeFilter)(nil),               // 8: jagw.RangeFilter
-	(*LsNodeResponse)(nil),            // 9: jagw.LsNodeResponse
-	(*LsLinkResponse)(nil),            // 10: jagw.LsLinkResponse
-	(*LsPrefixResponse)(nil),          // 11: jagw.LsPrefixResponse
-	(*LsSrv6SidResponse)(nil),         // 12: jagw.LsSrv6SidResponse
-	(*LsNodeEdgeResponse)(nil),        // 13: jagw.LsNodeEdgeResponse
-	(*LsNodeCoordinatesResponse)(nil), // 14: jagw.LsNodeCoordinatesResponse
-	(*TelemetryResponse)(nil),         // 15: jagw.TelemetryResponse
-	(StringOperator)(0),               // 16: jagw.StringOperator
-	(*LsNode)(nil),                    // 17: jagw.LsNode
-	(*LsLink)(nil),                    // 18: jagw.LsLink
-	(*LsPrefix)(nil),                  // 19: jagw.LsPrefix
-	(*LsSrv6Sid)(nil),                 // 20: jagw.LsSrv6Sid
-	(*LsNodeEdge)(nil),                // 21: jagw.LsNodeEdge
-	(*LsNodeCoordinates)(nil),         // 22: jagw.LsNodeCoordinates
+	(*MeasurementsRequest)(nil),        // 0: jagw.MeasurementsRequest
+	(*MeasurementsResponse)(nil),       // 1: jagw.MeasurementsResponse
+	(*Measurement)(nil),                // 2: jagw.Measurement
+	(*MeasurementDetailsRequest)(nil),  // 3: jagw.MeasurementDetailsRequest
+	(*MeasurementDetailsResponse)(nil), // 4: jagw.MeasurementDetailsResponse
+	(*MeasurementColumn)(nil),          // 5: jagw.MeasurementColumn
+	(*TopologyRequest)(nil),            // 6: jagw.TopologyRequest
+	(*LsNodeCoordinatesRequest)(nil),   // 7: jagw.LsNodeCoordinatesRequest
+	(*TelemetryRequest)(nil),           // 8: jagw.TelemetryRequest
+	(*StringFilter)(nil),               // 9: jagw.StringFilter
+	(*RangeFilter)(nil),                // 10: jagw.RangeFilter
+	(*LsNodeResponse)(nil),             // 11: jagw.LsNodeResponse
+	(*LsLinkResponse)(nil),             // 12: jagw.LsLinkResponse
+	(*LsPrefixResponse)(nil),           // 13: jagw.LsPrefixResponse
+	(*LsSrv6SidResponse)(nil),          // 14: jagw.LsSrv6SidResponse
+	(*LsNodeEdgeResponse)(nil),         // 15: jagw.LsNodeEdgeResponse
+	(*LsNodeCoordinatesResponse)(nil),  // 16: jagw.LsNodeCoordinatesResponse
+	(*TelemetryResponse)(nil),          // 17: jagw.TelemetryResponse
+	(StringOperator)(0),                // 18: jagw.StringOperator
+	(*LsNode)(nil),                     // 19: jagw.LsNode
+	(*LsLink)(nil),                     // 20: jagw.LsLink
+	(*LsPrefix)(nil),                   // 21: jagw.LsPrefix
+	(*LsSrv6Sid)(nil),                  // 22: jagw.LsSrv6Sid
+	(*LsNodeEdge)(nil),                 // 23: jagw.LsNodeEdge
+	(*LsNodeCoordinates)(nil),          // 24: jagw.LsNodeCoordinates
 }
 var file_requestservice_requestservice_proto_depIdxs = []int32{
 	2,  // 0: jagw.MeasurementsResponse.measurements:type_name -> jagw.Measurement
-	3,  // 1: jagw.Measurement.columns:type_name -> jagw.MeasurementColumn
-	7,  // 2: jagw.TelemetryRequest.string_filters:type_name -> jagw.StringFilter
-	8,  // 3: jagw.TelemetryRequest.range_filter:type_name -> jagw.RangeFilter
-	16, // 4: jagw.StringFilter.operator:type_name -> jagw.StringOperator
-	17, // 5: jagw.LsNodeResponse.ls_nodes:type_name -> jagw.LsNode
-	18, // 6: jagw.LsLinkResponse.ls_links:type_name -> jagw.LsLink
-	19, // 7: jagw.LsPrefixResponse.ls_prefixes:type_name -> jagw.LsPrefix
-	20, // 8: jagw.LsSrv6SidResponse.ls_srv6_sids:type_name -> jagw.LsSrv6Sid
-	21, // 9: jagw.LsNodeEdgeResponse.ls_node_edges:type_name -> jagw.LsNodeEdge
-	22, // 10: jagw.LsNodeCoordinatesResponse.coordinates:type_name -> jagw.LsNodeCoordinates
-	4,  // 11: jagw.RequestService.GetLsNodes:input_type -> jagw.TopologyRequest
-	4,  // 12: jagw.RequestService.GetLsLinks:input_type -> jagw.TopologyRequest
-	4,  // 13: jagw.RequestService.GetLsPrefixes:input_type -> jagw.TopologyRequest
-	4,  // 14: jagw.RequestService.GetLsSrv6Sids:input_type -> jagw.TopologyRequest
-	4,  // 15: jagw.RequestService.GetLsNodeEdges:input_type -> jagw.TopologyRequest
-	5,  // 16: jagw.RequestService.GetLsNodeCoordinates:input_type -> jagw.LsNodeCoordinatesRequest
-	6,  // 17: jagw.RequestService.GetTelemetryData:input_type -> jagw.TelemetryRequest
+	5,  // 1: jagw.MeasurementDetailsResponse.columns:type_name -> jagw.MeasurementColumn
+	9,  // 2: jagw.TelemetryRequest.string_filters:type_name -> jagw.StringFilter
+	10, // 3: jagw.TelemetryRequest.range_filter:type_name -> jagw.RangeFilter
+	18, // 4: jagw.StringFilter.operator:type_name -> jagw.StringOperator
+	19, // 5: jagw.LsNodeResponse.ls_nodes:type_name -> jagw.LsNode
+	20, // 6: jagw.LsLinkResponse.ls_links:type_name -> jagw.LsLink
+	21, // 7: jagw.LsPrefixResponse.ls_prefixes:type_name -> jagw.LsPrefix
+	22, // 8: jagw.LsSrv6SidResponse.ls_srv6_sids:type_name -> jagw.LsSrv6Sid
+	23, // 9: jagw.LsNodeEdgeResponse.ls_node_edges:type_name -> jagw.LsNodeEdge
+	24, // 10: jagw.LsNodeCoordinatesResponse.coordinates:type_name -> jagw.LsNodeCoordinates
+	6,  // 11: jagw.RequestService.GetLsNodes:input_type -> jagw.TopologyRequest
+	6,  // 12: jagw.RequestService.GetLsLinks:input_type -> jagw.TopologyRequest
+	6,  // 13: jagw.RequestService.GetLsPrefixes:input_type -> jagw.TopologyRequest
+	6,  // 14: jagw.RequestService.GetLsSrv6Sids:input_type -> jagw.TopologyRequest
+	6,  // 15: jagw.RequestService.GetLsNodeEdges:input_type -> jagw.TopologyRequest
+	7,  // 16: jagw.RequestService.GetLsNodeCoordinates:input_type -> jagw.LsNodeCoordinatesRequest
+	8,  // 17: jagw.RequestService.GetTelemetryData:input_type -> jagw.TelemetryRequest
 	0,  // 18: jagw.RequestService.GetMeasurements:input_type -> jagw.MeasurementsRequest
-	9,  // 19: jagw.RequestService.GetLsNodes:output_type -> jagw.LsNodeResponse
-	10, // 20: jagw.RequestService.GetLsLinks:output_type -> jagw.LsLinkResponse
-	11, // 21: jagw.RequestService.GetLsPrefixes:output_type -> jagw.LsPrefixResponse
-	12, // 22: jagw.RequestService.GetLsSrv6Sids:output_type -> jagw.LsSrv6SidResponse
-	13, // 23: jagw.RequestService.GetLsNodeEdges:output_type -> jagw.LsNodeEdgeResponse
-	14, // 24: jagw.RequestService.GetLsNodeCoordinates:output_type -> jagw.LsNodeCoordinatesResponse
-	15, // 25: jagw.RequestService.GetTelemetryData:output_type -> jagw.TelemetryResponse
-	1,  // 26: jagw.RequestService.GetMeasurements:output_type -> jagw.MeasurementsResponse
-	19, // [19:27] is the sub-list for method output_type
-	11, // [11:19] is the sub-list for method input_type
+	3,  // 19: jagw.RequestService.GetMeasurementDetails:input_type -> jagw.MeasurementDetailsRequest
+	11, // 20: jagw.RequestService.GetLsNodes:output_type -> jagw.LsNodeResponse
+	12, // 21: jagw.RequestService.GetLsLinks:output_type -> jagw.LsLinkResponse
+	13, // 22: jagw.RequestService.GetLsPrefixes:output_type -> jagw.LsPrefixResponse
+	14, // 23: jagw.RequestService.GetLsSrv6Sids:output_type -> jagw.LsSrv6SidResponse
+	15, // 24: jagw.RequestService.GetLsNodeEdges:output_type -> jagw.LsNodeEdgeResponse
+	16, // 25: jagw.RequestService.GetLsNodeCoordinates:output_type -> jagw.LsNodeCoordinatesResponse
+	17, // 26: jagw.RequestService.GetTelemetryData:output_type -> jagw.TelemetryResponse
+	1,  // 27: jagw.RequestService.GetMeasurements:output_type -> jagw.MeasurementsResponse
+	4,  // 28: jagw.RequestService.GetMeasurementDetails:output_type -> jagw.MeasurementDetailsResponse
+	20, // [20:29] is the sub-list for method output_type
+	11, // [11:20] is the sub-list for method input_type
 	11, // [11:11] is the sub-list for extension type_name
 	11, // [11:11] is the sub-list for extension extendee
 	0,  // [0:11] is the sub-list for field type_name
@@ -1106,7 +1229,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MeasurementColumn); i {
+			switch v := v.(*MeasurementDetailsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1118,7 +1241,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TopologyRequest); i {
+			switch v := v.(*MeasurementDetailsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1130,7 +1253,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LsNodeCoordinatesRequest); i {
+			switch v := v.(*MeasurementColumn); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1142,7 +1265,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TelemetryRequest); i {
+			switch v := v.(*TopologyRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1154,7 +1277,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StringFilter); i {
+			switch v := v.(*LsNodeCoordinatesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1166,7 +1289,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RangeFilter); i {
+			switch v := v.(*TelemetryRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1178,7 +1301,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LsNodeResponse); i {
+			switch v := v.(*StringFilter); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1190,7 +1313,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LsLinkResponse); i {
+			switch v := v.(*RangeFilter); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1202,7 +1325,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LsPrefixResponse); i {
+			switch v := v.(*LsNodeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1214,7 +1337,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LsSrv6SidResponse); i {
+			switch v := v.(*LsLinkResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1226,7 +1349,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LsNodeEdgeResponse); i {
+			switch v := v.(*LsPrefixResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1238,7 +1361,7 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LsNodeCoordinatesResponse); i {
+			switch v := v.(*LsSrv6SidResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1250,6 +1373,30 @@ func file_requestservice_requestservice_proto_init() {
 			}
 		}
 		file_requestservice_requestservice_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LsNodeEdgeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_requestservice_requestservice_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LsNodeCoordinatesResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_requestservice_requestservice_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TelemetryResponse); i {
 			case 0:
 				return &v.state
@@ -1268,7 +1415,7 @@ func file_requestservice_requestservice_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_requestservice_requestservice_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
