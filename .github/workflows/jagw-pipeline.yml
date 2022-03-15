@@ -20,7 +20,7 @@ jobs:
     uses: jalapeno-api-gateway/protorepo-jagw-go/.github/workflows/create-tag.yml@main
   call-create-release:
     needs: call-create-tag
-    if: github.event.inputs.type == 'release'
+    if: github.event.inputs.github.event. == 'release'
     uses: jalapeno-api-gateway/protorepo-jagw-go/.github/workflows/create-release.yml@main
   call-trigger-remote-repo:
     needs: [call-create-tag]
