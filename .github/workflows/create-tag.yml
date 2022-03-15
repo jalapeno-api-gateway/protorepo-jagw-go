@@ -20,7 +20,7 @@ jobs:
   create-tag:
     runs-on: ubuntu-latest
     outputs: 
-      protorepo_jagw_go_ref: ${{ steps.get-sha.outputs.protorepo_jagw_go_ref }}
+      protorepo_jagw_go_ref: ${{ steps.go-ref.outputs.protorepo_jagw_go_ref }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
