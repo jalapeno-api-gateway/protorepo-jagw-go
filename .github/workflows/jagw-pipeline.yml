@@ -10,7 +10,7 @@ on:
         description: "Build branch (dev | main)"
         required: true
         type: string
-      type:
+      release_or_dev:
         description: "Type (dev | release)"
         required: true
         type: string
