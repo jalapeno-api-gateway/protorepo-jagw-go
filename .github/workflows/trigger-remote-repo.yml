@@ -23,11 +23,14 @@ on:
         description: "dev | release"
         type: string
         required: true
+      protorepo_jagw_go_commit_sha:
+        type: string
+        required: true
     secrets:
       pat_full_repo_access:
         description: "A GitHub token with full repo access."
         required: true
-  
+
 jobs:
   trigger:
     runs-on: ubuntu-latest
@@ -40,6 +43,6 @@ jobs:
           github_user: mbongard
           workflow_file_name: ${{ inputs.workflow_file }}
           ref: dev
-          client_payload: '{"tag_name": "${{ inputs.tag_name }}", "build_branch": "${{ inputs.build_branch }}", "type": "${{ inputs.type }}"}'
+          client_payload: '{"tag_name": "${{ inputs.tag_name }}", "build_branch": "${{ inputs.build_branch }}", "type": "${{ inputs.type }}", "protorepo_jagw_go_commit_sha": "${{ inputs.protorepo_jagw_go_commit_sha }}"}'
           propagate_failure: false
           wait_workflow: false
