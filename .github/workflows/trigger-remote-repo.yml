@@ -32,6 +32,6 @@ jobs:
           github_user: mbongard
           workflow_file_name: ${{ inputs.workflow_file }}
           ref: dev
-          client_payload: '{"tag_name": "${{ github.event.inputs.tag_name }}", "build_branch": "${{ github.event.inputs.build_branch }}", "type": "${{ github.event.inputs.release_or_dev }}", "protorepo_jagw_go_ref": "${{ inputs.protorepo_jagw_go_ref }}"}'
+          client_payload: '{"tag_name": "${{ github.event.inputs.tag_name }}", "build_branch": "${{ github.event.inputs.build_branch }}", "release_or_dev": "${{ github.event.inputs.release_or_dev }}", "protorepo_jagw_go_ref": "${{ inputs.protorepo_jagw_go_ref }}"}'
           propagate_failure: false
           wait_workflow: false
