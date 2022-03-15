@@ -24,6 +24,7 @@ on:
         type: string
         required: true
       protorepo_jagw_go_ref:
+        description: "Ref used by other go modules to import this version"
         type: string
         required: true
     secrets:
