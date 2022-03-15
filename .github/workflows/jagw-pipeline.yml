@@ -19,6 +19,7 @@ jobs:
   call-create-tag:
     uses: jalapeno-api-gateway/protorepo-jagw-go/.github/workflows/create-tag.yml@main
     with:
+      release_type: ${{ github.event.inputs.release_type }}
       tag_name: ${{ github.event.inputs.tag_name }}
   call-create-release:
     needs: call-create-tag
