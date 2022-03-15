@@ -23,7 +23,7 @@ on:
         description: "dev | release"
         type: string
         required: true
-      protorepo_jagw_go_commit_sha:
+      protorepo_jagw_go_ref:
         type: string
         required: true
     secrets:
@@ -43,6 +43,6 @@ jobs:
           github_user: mbongard
           workflow_file_name: ${{ inputs.workflow_file }}
           ref: dev
-          client_payload: '{"tag_name": "${{ inputs.tag_name }}", "build_branch": "${{ inputs.build_branch }}", "type": "${{ inputs.type }}", "protorepo_jagw_go_commit_sha": "${{ inputs.protorepo_jagw_go_commit_sha }}"}'
+          client_payload: '{"tag_name": "${{ inputs.tag_name }}", "build_branch": "${{ inputs.build_branch }}", "type": "${{ inputs.type }}", "protorepo_jagw_go_ref": "${{ inputs.protorepo_jagw_go_ref }}"}'
           propagate_failure: false
           wait_workflow: false
