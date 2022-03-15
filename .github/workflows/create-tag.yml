@@ -2,15 +2,6 @@ name: Create Tag
 
 on: 
   workflow_call:
-    inputs:
-      release_type:
-        description: 'Name of the tag to create'
-        type: string
-        required: true
-      tag_name:
-        description: 'Name of the tag to create'
-        type: string
-        required: true
     outputs:
       protorepo_jagw_go_ref:
         description: "Ref used by other go modules to import this version"
@@ -38,12 +29,12 @@ jobs:
               sha: context.sha
             })
         env:
-          TAG_NAME: "${{ inputs.tag_name }}"
+          TAG_NAME: "${{ github.event.inputs.tag_name }}"
       - name: Get ref for Golang
         id: go-ref
         run: |
-          if [[ ${{ inputs.release_type }} == 'release' ]]; then
-            echo "::set-output name=protorepo_jagw_go_ref::${{ inputs.tag_name }}"
+          if [[ ${{ github.event.inputs.release_or_dev }} == 'release' ]]; then
+            echo "::set-output name=protorepo_jagw_go_ref::${{ github.event.inputs.tag_name }}"
           else
-            echo "::set-output name=protorepo_jagw_go_ref::$(git rev-list -n 1 ${{ inputs.tag_name }})"
+            echo "::set-output name=protorepo_jagw_go_ref::$(git rev-list -n 1 ${{ github.event.inputs.tag_name }})"
           fi
