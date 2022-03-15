@@ -1,0 +1,39 @@
+name: JAGW Pipieline
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:   
+        required: true
+        type: string
+      build_branch:
+        description: "Build branch (dev | main)"
+        required: true
+        type: string
+      type:
+        description: "Type (dev | release)"
+        required: true
+        type: string
+
+jobs:
+  call-create-tag:
+    uses: jalapeno-api-gateway/protorepo-jagw-go/.github/workflows/create-tag.yml@main
+    with:
+      tag_name: ${{ github.event.inputs.tag_name }}
+  call-create-release:
+    needs: call-create-tag
+    if: github.event.inputs.type == 'release'
+    uses: jalapeno-api-gateway/protorepo-jagw-go/.github/workflows/create-release.yml@main
+    with:
+      tag_name: ${{ github.event.inputs.tag_name }}
+  call-trigger-remote-repo:
+    needs: [call-create-tag]
+    uses: jalapeno-api-gateway/protorepo-jagw-go/.github/workflows/trigger-remote-repo.yml@main
+    with:
+      repo_name: jagw-core
+      workflow_file: jagw-pipeline.yml
+      tag_name: ${{ github.event.inputs.tag_name }}
+      build_branch: ${{ github.event.inputs.build_branch }}
+      type: ${{ github.event.inputs.type }}
+    secrets:
+      pat_full_repo_access: ${{ secrets.PAT_FULL_REPO_ACCESS }}
