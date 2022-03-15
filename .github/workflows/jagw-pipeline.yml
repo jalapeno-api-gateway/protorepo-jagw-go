@@ -35,5 +35,6 @@ jobs:
       tag_name: ${{ github.event.inputs.tag_name }}
       build_branch: ${{ github.event.inputs.build_branch }}
       type: ${{ github.event.inputs.type }}
+      protorepo_jagw_go_commit_sha: ${{ needs.call-create-tag.outputs.commit_sha }}
     secrets:
       pat_full_repo_access: ${{ secrets.PAT_FULL_REPO_ACCESS }}
