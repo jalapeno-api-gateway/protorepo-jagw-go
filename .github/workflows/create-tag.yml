@@ -33,6 +33,7 @@ jobs:
       - name: Get ref for Golang
         id: go-ref
         run: |
+          git fetch --all --tags
           if [[ ${{ github.event.inputs.release_or_dev }} == 'release' ]]; then
             echo "::set-output name=protorepo_jagw_go_ref::${{ github.event.inputs.tag_name }}"
           else
