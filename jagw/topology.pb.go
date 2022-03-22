@@ -966,6 +966,85 @@ func (x *LsNodeCoordinates) GetLongitude() float64 {
 	return 0
 }
 
+type Peer struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Key         *string `protobuf:"bytes,1,req,name=key" json:"key,omitempty"`
+	Id          *string `protobuf:"bytes,2,opt,name=id" json:"id,omitempty"`
+	RouterHash  *string `protobuf:"bytes,3,opt,name=router_hash,json=routerHash" json:"router_hash,omitempty"`
+	RemoteBgpId *string `protobuf:"bytes,4,opt,name=remote_bgp_id,json=remoteBgpId" json:"remote_bgp_id,omitempty"`
+	LocalBgpId  *string `protobuf:"bytes,5,opt,name=local_bgp_id,json=localBgpId" json:"local_bgp_id,omitempty"`
+}
+
+func (x *Peer) Reset() {
+	*x = Peer{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_core_topology_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Peer) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Peer) ProtoMessage() {}
+
+func (x *Peer) ProtoReflect() protoreflect.Message {
+	mi := &file_core_topology_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Peer.ProtoReflect.Descriptor instead.
+func (*Peer) Descriptor() ([]byte, []int) {
+	return file_core_topology_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Peer) GetKey() string {
+	if x != nil && x.Key != nil {
+		return *x.Key
+	}
+	return ""
+}
+
+func (x *Peer) GetId() string {
+	if x != nil && x.Id != nil {
+		return *x.Id
+	}
+	return ""
+}
+
+func (x *Peer) GetRouterHash() string {
+	if x != nil && x.RouterHash != nil {
+		return *x.RouterHash
+	}
+	return ""
+}
+
+func (x *Peer) GetRemoteBgpId() string {
+	if x != nil && x.RemoteBgpId != nil {
+		return *x.RemoteBgpId
+	}
+	return ""
+}
+
+func (x *Peer) GetLocalBgpId() string {
+	if x != nil && x.LocalBgpId != nil {
+		return *x.LocalBgpId
+	}
+	return ""
+}
+
 var File_core_topology_proto protoreflect.FileDescriptor
 
 var file_core_topology_proto_rawDesc = []byte{
@@ -1141,10 +1220,19 @@ var file_core_topology_proto_rawDesc = []byte{
 	0x61, 0x74, 0x69, 0x74, 0x75, 0x64, 0x65, 0x18, 0x04, 0x20, 0x02, 0x28, 0x01, 0x52, 0x08, 0x6c,
 	0x61, 0x74, 0x69, 0x74, 0x75, 0x64, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x6f, 0x6e, 0x67, 0x69,
 	0x74, 0x75, 0x64, 0x65, 0x18, 0x05, 0x20, 0x02, 0x28, 0x01, 0x52, 0x09, 0x6c, 0x6f, 0x6e, 0x67,
-	0x69, 0x74, 0x75, 0x64, 0x65, 0x42, 0x34, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x6a, 0x61, 0x6c, 0x61, 0x70, 0x65, 0x6e, 0x6f, 0x2d, 0x61, 0x70, 0x69,
-	0x2d, 0x67, 0x61, 0x74, 0x65, 0x77, 0x61, 0x79, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
-	0x66, 0x2f, 0x6a, 0x61, 0x67, 0x77, 0x3b, 0x6a, 0x61, 0x67, 0x77,
+	0x69, 0x74, 0x75, 0x64, 0x65, 0x22, 0x8f, 0x01, 0x0a, 0x04, 0x50, 0x65, 0x65, 0x72, 0x12, 0x10,
+	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x02, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x1f, 0x0a, 0x0b, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x72, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x72, 0x48, 0x61, 0x73,
+	0x68, 0x12, 0x22, 0x0a, 0x0d, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x5f, 0x62, 0x67, 0x70, 0x5f,
+	0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65,
+	0x42, 0x67, 0x70, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0c, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x5f, 0x62,
+	0x67, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x6c, 0x6f, 0x63,
+	0x61, 0x6c, 0x42, 0x67, 0x70, 0x49, 0x64, 0x42, 0x34, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75,
+	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6a, 0x61, 0x6c, 0x61, 0x70, 0x65, 0x6e, 0x6f, 0x2d, 0x61,
+	0x70, 0x69, 0x2d, 0x67, 0x61, 0x74, 0x65, 0x77, 0x61, 0x79, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x2f, 0x6a, 0x61, 0x67, 0x77, 0x3b, 0x6a, 0x61, 0x67, 0x77,
 }
 
 var (
@@ -1159,7 +1247,7 @@ func file_core_topology_proto_rawDescGZIP() []byte {
 	return file_core_topology_proto_rawDescData
 }
 
-var file_core_topology_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_core_topology_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_core_topology_proto_goTypes = []interface{}{
 	(*LsNode)(nil),                  // 0: jagw.LsNode
 	(*LsLink)(nil),                  // 1: jagw.LsLink
@@ -1167,13 +1255,14 @@ var file_core_topology_proto_goTypes = []interface{}{
 	(*LsSrv6Sid)(nil),               // 3: jagw.LsSrv6Sid
 	(*LsNodeEdge)(nil),              // 4: jagw.LsNodeEdge
 	(*LsNodeCoordinates)(nil),       // 5: jagw.LsNodeCoordinates
-	(*MultiTopologyIdentifier)(nil), // 6: jagw.MultiTopologyIdentifier
+	(*Peer)(nil),                    // 6: jagw.Peer
+	(*MultiTopologyIdentifier)(nil), // 7: jagw.MultiTopologyIdentifier
 }
 var file_core_topology_proto_depIdxs = []int32{
-	6, // 0: jagw.LsNode.mtid:type_name -> jagw.MultiTopologyIdentifier
-	6, // 1: jagw.LsLink.mtid:type_name -> jagw.MultiTopologyIdentifier
-	6, // 2: jagw.LsPrefix.mtid:type_name -> jagw.MultiTopologyIdentifier
-	6, // 3: jagw.LsSrv6Sid.mtid:type_name -> jagw.MultiTopologyIdentifier
+	7, // 0: jagw.LsNode.mtid:type_name -> jagw.MultiTopologyIdentifier
+	7, // 1: jagw.LsLink.mtid:type_name -> jagw.MultiTopologyIdentifier
+	7, // 2: jagw.LsPrefix.mtid:type_name -> jagw.MultiTopologyIdentifier
+	7, // 3: jagw.LsSrv6Sid.mtid:type_name -> jagw.MultiTopologyIdentifier
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -1260,6 +1349,18 @@ func file_core_topology_proto_init() {
 				return nil
 			}
 		}
+		file_core_topology_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Peer); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1267,7 +1368,7 @@ func file_core_topology_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_core_topology_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

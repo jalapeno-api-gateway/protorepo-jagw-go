@@ -23,6 +23,7 @@ type SubscriptionServiceClient interface {
 	SubscribeToLsPrefixes(ctx context.Context, in *TopologySubscription, opts ...grpc.CallOption) (SubscriptionService_SubscribeToLsPrefixesClient, error)
 	SubscribeToLsSrv6Sids(ctx context.Context, in *TopologySubscription, opts ...grpc.CallOption) (SubscriptionService_SubscribeToLsSrv6SidsClient, error)
 	SubscribeToLsNodeEdges(ctx context.Context, in *TopologySubscription, opts ...grpc.CallOption) (SubscriptionService_SubscribeToLsNodeEdgesClient, error)
+	SubscribeToPeers(ctx context.Context, in *TopologySubscription, opts ...grpc.CallOption) (SubscriptionService_SubscribeToPeersClient, error)
 	SubscribeToTelemetryData(ctx context.Context, in *TelemetrySubscription, opts ...grpc.CallOption) (SubscriptionService_SubscribeToTelemetryDataClient, error)
 }
 
@@ -194,8 +195,40 @@ func (x *subscriptionServiceSubscribeToLsNodeEdgesClient) Recv() (*LsNodeEdgeEve
 	return m, nil
 }
 
+func (c *subscriptionServiceClient) SubscribeToPeers(ctx context.Context, in *TopologySubscription, opts ...grpc.CallOption) (SubscriptionService_SubscribeToPeersClient, error) {
+	stream, err := c.cc.NewStream(ctx, &SubscriptionService_ServiceDesc.Streams[5], "/jagw.SubscriptionService/SubscribeToPeers", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &subscriptionServiceSubscribeToPeersClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type SubscriptionService_SubscribeToPeersClient interface {
+	Recv() (*PeerEvent, error)
+	grpc.ClientStream
+}
+
+type subscriptionServiceSubscribeToPeersClient struct {
+	grpc.ClientStream
+}
+
+func (x *subscriptionServiceSubscribeToPeersClient) Recv() (*PeerEvent, error) {
+	m := new(PeerEvent)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *subscriptionServiceClient) SubscribeToTelemetryData(ctx context.Context, in *TelemetrySubscription, opts ...grpc.CallOption) (SubscriptionService_SubscribeToTelemetryDataClient, error) {
-	stream, err := c.cc.NewStream(ctx, &SubscriptionService_ServiceDesc.Streams[5], "/jagw.SubscriptionService/SubscribeToTelemetryData", opts...)
+	stream, err := c.cc.NewStream(ctx, &SubscriptionService_ServiceDesc.Streams[6], "/jagw.SubscriptionService/SubscribeToTelemetryData", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -235,6 +268,7 @@ type SubscriptionServiceServer interface {
 	SubscribeToLsPrefixes(*TopologySubscription, SubscriptionService_SubscribeToLsPrefixesServer) error
 	SubscribeToLsSrv6Sids(*TopologySubscription, SubscriptionService_SubscribeToLsSrv6SidsServer) error
 	SubscribeToLsNodeEdges(*TopologySubscription, SubscriptionService_SubscribeToLsNodeEdgesServer) error
+	SubscribeToPeers(*TopologySubscription, SubscriptionService_SubscribeToPeersServer) error
 	SubscribeToTelemetryData(*TelemetrySubscription, SubscriptionService_SubscribeToTelemetryDataServer) error
 	mustEmbedUnimplementedSubscriptionServiceServer()
 }
@@ -257,6 +291,9 @@ func (UnimplementedSubscriptionServiceServer) SubscribeToLsSrv6Sids(*TopologySub
 }
 func (UnimplementedSubscriptionServiceServer) SubscribeToLsNodeEdges(*TopologySubscription, SubscriptionService_SubscribeToLsNodeEdgesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeToLsNodeEdges not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) SubscribeToPeers(*TopologySubscription, SubscriptionService_SubscribeToPeersServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeToPeers not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) SubscribeToTelemetryData(*TelemetrySubscription, SubscriptionService_SubscribeToTelemetryDataServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeToTelemetryData not implemented")
@@ -379,6 +416,27 @@ func (x *subscriptionServiceSubscribeToLsNodeEdgesServer) Send(m *LsNodeEdgeEven
 	return x.ServerStream.SendMsg(m)
 }
 
+func _SubscriptionService_SubscribeToPeers_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(TopologySubscription)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(SubscriptionServiceServer).SubscribeToPeers(m, &subscriptionServiceSubscribeToPeersServer{stream})
+}
+
+type SubscriptionService_SubscribeToPeersServer interface {
+	Send(*PeerEvent) error
+	grpc.ServerStream
+}
+
+type subscriptionServiceSubscribeToPeersServer struct {
+	grpc.ServerStream
+}
+
+func (x *subscriptionServiceSubscribeToPeersServer) Send(m *PeerEvent) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _SubscriptionService_SubscribeToTelemetryData_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(TelemetrySubscription)
 	if err := stream.RecvMsg(m); err != nil {
@@ -431,6 +489,11 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "SubscribeToLsNodeEdges",
 			Handler:       _SubscriptionService_SubscribeToLsNodeEdges_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "SubscribeToPeers",
+			Handler:       _SubscriptionService_SubscribeToPeers_Handler,
 			ServerStreams: true,
 		},
 		{
